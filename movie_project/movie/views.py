@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Movielink, Movieinfo, Usercomment
 from django.db.models import Subquery, Avg
+from .rcmSys import rcm
 
 def filmplayer(request, id, ep : str):
     movie = get_object_or_404(Movieinfo, movieid=id)
@@ -17,9 +18,15 @@ def filmplayer(request, id, ep : str):
 def filminfo(request, id):
     movie = get_object_or_404(Movieinfo, movieid=id)
     movieEpList = Movielink.objects.filter(movieid=id)
+
+    movieRcmIDs = rcm.recommend(id)
+
+    movieRcm = Movieinfo.objects.filter(movieid__in=movieRcmIDs)
+
     context = {
         'movie': movie,
-        'movieEpList': movieEpList
+        'movieEpList': movieEpList,
+        'movieRcm': movieRcm
     }
     return render(request, 'filminfo.html', context)
 

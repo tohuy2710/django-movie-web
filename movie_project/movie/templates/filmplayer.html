@@ -5,19 +5,42 @@
 {% endblock %}
 
 {% block content %}
+  <style>
+    .video-container {
+      display: flex;
+      justify-content: center; 
+      align-items: center;      
+    }
+
+    .ifr {
+      max-width: 100%;
+      border: none;
+    }
+  </style>
   {% with link="https://www.livereacting.com/tools/hls-player-embed?url="|add:movieEp.link %}
-    <iframe 
-      src="{{ link }}" 
-      width="640px" 
-      height="360px" 
-      frameborder="0" 
-      allowfullscreen 
-      style="max-width: 100%;">
-    </iframe>
-    <ul>
-      {% for x in movieEpList %}
-        <li><a href="{% url 'filmplayer' x.movieid x.episode %}">{{ x.episode }}</a></li>
-      {% endfor %}
-    </ul>
+  <div style="background-color: black;">
+    <div class="video-container">
+      <iframe 
+      class="ifr"
+        src="{{ link }}" 
+        width="960px" 
+        height="540px" 
+        frameborder="0" 
+        allowfullscreen 
+        style="max-width: 100%;">
+      </iframe>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <h1 style="color: white;">Xem phim {{ movie.name }} - {{ movieEp.episode }}</h1>
+    </div>
+    
+      
+      <ul>
+        {% for x in movieEpList %}
+          <li><a href="{% url 'filmplayer' x.movieid x.episode %}">{{ x.episode }}</a></li>
+        {% endfor %}
+      </ul>
+  </div>
+  
   {% endwith %}
 {% endblock %}

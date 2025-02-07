@@ -19,7 +19,7 @@
 
     .content {
       width: 100%;
-      height: 90vh;
+      height: 120vh;
       position: relative;
       background-image: url('{{ movie.thumbnailimg }}'); 
       background-size: cover;            /* Giúp hình ảnh phủ kín toàn bộ màn hình */
@@ -28,13 +28,13 @@
     }
 
     .movie-container {
-      top: 10%;
+      top: 5%;
       position: relative; /* Để đảm bảo nó nằm trên nền */
       z-index: 2; /* Quan trọng: Đặt cao hơn filterBackground */
       justify-content: center;
       color: white;
       width: 40%;
-      padding: 20px;
+      padding: 0px 0px 0px 20px;
     }
 
     #name {
@@ -91,7 +91,37 @@
       font-size: 18px;
       font-weight: 600;
     }
+    .mvBox {
+      position: relative;
+      background-size: cover; 
+      height: 240px; 
+      width: 160px; 
+      z-index: 3;
+    }
 
+    .mvBoxInfo {
+      background-color: rgb(0, 0, 0, 0.8);
+      position: relative;
+      top: 190px;
+      color: white;
+      padding-bottom: 7px;
+      text-align: center;
+    }
+    .mvBoxInfo h4 {
+      font-size: 16px;
+      margin: 0px;
+    }
+
+    .mvBoxInfo p {
+      margin: 0px;
+    }
+
+    .rcmContainer {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); 
+      grid-template-rows: repeat(auto, auto);
+      column-gap: 10px;
+    }
   </style>
   <div class="content">
     <div class="movie-container">
@@ -112,6 +142,25 @@
         </div>
         <p class="info">{{ movie.genre }}</p>
 
+        <div>
+          <h1>Phim Đề xuất</h1>
+        </div>
+
+        <div class="rcmContainer">
+          {% for mv in movieRcm %}
+            <div class="mvBox" style="background-image: url('{{ mv.coverimg }}');" onclick="filmInfo('{{ mv.movieid }}')">
+              <div class = "mvBoxInfo">
+                {% if mv.name|length <= 16 %}
+                <h4> {{ mv.name|slice:":16"}} </h4>
+                {% else %}
+                <h4> {{ mv.name|slice:":16"}}.. </h4>
+                {% endif %}
+                <p>{{ mv.language|slice:"20" }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
         <script>
           function watchMovie() {
             const selectedEp = document.getElementById('selectEp').value; 
@@ -120,9 +169,13 @@
               
               const newUrl = `${currentPath}${encodeURIComponent(selectedEp)}`;
 
-              // Chuyển hướng sang URL mới
               window.location.href = newUrl;
             }
+          }
+
+          function filmInfo(movieID) {
+            const newUrl = `http://127.0.0.1:8000/filmplayer/${movieID}`;
+            window.location.href = newUrl; 
           }
         </script>    
     </div>
