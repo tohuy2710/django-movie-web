@@ -1,0 +1,48 @@
+body {
+    margin: 0 0px;
+    padding: 0 0px;
+    font-family: 'San Francisco', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+}
+
+#navbar {
+    display: flex; 
+    justify-content: left;
+    background-color: black;
+    padding: 10px;
+    margin: 0;  
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    border: 0px;
+    position: relative; /* Giữ vị trí mặc định */
+    box-sizing: border-box; /* Đảm bảo tính toán kích thước đúng */
+}
+
+/* Định dạng cơ bản cho các liên kết */
+.nav-link {
+    text-decoration: none; /* Loại bỏ gạch chân mặc định */
+    color: white; /* Màu chữ trắng */
+    transition: all 0.3s ease; /* Hiệu ứng mượt mà khi hover */
+    font-size: 20px; /* Cỡ chữ mặc định */
+    margin: 0 20px; /* Tạo khoảng cách ngang giữa các liên kết */
+    display: flex; /* Sử dụng Flexbox để căn giữa */
+    justify-content: center; /* Căn giữa ngang */
+    align-items: center; /* Căn giữa dọc */
+    text-align: center; /* Căn giữa nội dung trong liên kết */
+    font-family: 'San Francisco', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-weight: bold; /* In đậm các chữ */
+    height: 100%; /* Đảm bảo chiều cao đầy đủ để căn giữa dọc */
+}
+
+/* Hiệu ứng khi hover */
+.nav-link:hover {
+    color: rgb(247, 247, 247); /* Thay đổi màu khi hover */
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+/* Hiệu ứng khi liên kết đang được chọn (active) */
+.nav-link.active {
+    font-weight: bold; /* In đậm */
+    text-decoration: underline; /* Gạch chân */
+}
+
+

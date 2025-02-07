@@ -1,0 +1,175 @@
+{% extends "master.html" %}
+
+{% block title %}
+    HFilm - Phim hay - Phim mới - Phim hot
+{% endblock %}
+
+{% block content %}
+    <style>
+        .content {
+            background-color: black;
+            padding: 10px;
+            padding-top: 0px;
+        }
+
+        .viewContainer {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .recentlyUpdate {
+            position: relative;
+            height: auto;
+            background-color: rgb(32, 32, 32);
+            border: 2px dashed white;
+            padding: 0px 10px 20px 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); 
+            grid-template-rows: repeat(auto, auto);
+            row-gap: 10px; 
+            column-gap: 10px;
+        }
+
+        .bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            margin: 0px;
+            color: white
+        }
+
+        #seeMoreRUMovie {
+            position: relative;
+            align-self: right;
+            cursor: pointer;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .mvBox {
+            background-size: cover;
+            height: 240px;
+            width: 160px;
+            cursor: pointer;
+        }
+
+        .mvBox2 {
+            color: white;
+            width: 400px;
+            height: 140;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            margin: 10px 0px 10px 0px;
+            background-color: rgb(32, 32, 32);
+            border: 1px dashed white;
+            cursor: pointer;
+        }
+
+        .cov {
+            background-size: cover;
+            height: 120px;
+            width: 80px;
+        }
+        
+        .mvBoxInfo {
+            background-color: rgb(0, 0, 0, 0.8);
+            position: relative;
+            top: 190px;
+            color: white;
+            padding-bottom: 7px;
+            text-align: center;
+        }
+        .mvBoxInfo h4 {
+            font-size: 16px;
+            margin: 0px;
+        }
+
+        .mvBoxInfo p {
+            margin: 0px;
+        }
+
+        .mvBox2 h4 {
+            font-size: 16px;
+            margin: 0px;
+        }
+
+        .mvBox2 p {
+            margin: 0px;
+        }
+    </style>
+
+    <div class="content">
+        <div class="rcmContainer">
+
+        </div>
+        <div class="viewContainer">
+            <div class="gridTab">
+                <div class="recentlyUpdate">
+                    <div class="bar">
+                        <div class="title">
+                            <h2>PHIM MỚI CẬP NHẬT</h2>
+                        </div>
+                        <div id="seeMoreRUMovie">
+                            <p>Xem thêm ></p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        {% for mv in ruMovie %}
+                            <div class="mvBox" style="background-image: url('{{ mv.coverimg }}');" 
+                            onclick="filmInfo('{{ mv.movieid }}')">
+                                <div class = "mvBoxInfo">
+                                    {% if mv.name|length <= 16 %}
+                                    <h4> {{ mv.name|slice:":16"}} </h4>
+                                    {% else %}
+                                    <h4> {{ mv.name|slice:":16"}}.. </h4>
+                                    {% endif %}
+                                    <p>{{ mv.language|slice:"20" }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="listTab">
+                <div class="topRate">
+                    <div>
+                        <h2 class="title">PHIM ĐÁNH GIÁ CAO </h2>
+                    </div>
+
+                    <div class="list">
+                        {% for mv in trMovie %}
+                            <div class="mvBox2" onclick="filmInfo('{{ mv.movieid }}')">
+                                <div class="cov" style="background-image: url('{{ mv.coverimg }}')">
+                                </div>
+                                <div>
+                                    {% if mv.name|length <= 60 %}
+                                    <h4> {{ mv.name}} </h4>
+                                    {% else %}
+                                    <h4> {{ mv.name|slice:":60"}}.. </h4>
+                                    {% endif %}
+                                    <p style="font-style: italic;"> {{ mv.language }}</p>
+                                    <p>Trạng thái: {{ mv.status }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filmInfo(movieID) {
+            const newUrl = `http://127.0.0.1:8000/filmplayer/${movieID}`;
+            window.location.href = newUrl; 
+        }
+      </script> 
+
+{% endblock %}

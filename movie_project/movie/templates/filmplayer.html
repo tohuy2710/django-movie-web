@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Watch {{ movie.name }} - {{ movieEp.episode }}
+{% endblock %}
+
+{% block content %}
+  {% with link="https://www.livereacting.com/tools/hls-player-embed?url="|add:movieEp.link %}
+    <iframe 
+      src="{{ link }}" 
+      width="640px" 
+      height="360px" 
+      frameborder="0" 
+      allowfullscreen 
+      style="max-width: 100%;">
+    </iframe>
+    <ul>
+      {% for x in movieEpList %}
+        <li><a href="{% url 'filmplayer' x.movieid x.episode %}">{{ x.episode }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endwith %}
+{% endblock %}

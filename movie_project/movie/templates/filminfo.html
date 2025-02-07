@@ -1,0 +1,133 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Xem phim {{ movie.name }}
+{% endblock %}
+
+{% block content %}
+  <style>
+    .filterBackground {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 1) 10%, rgba(255, 255, 255, 0.0) 100%);
+        z-index: 1; /* Đảm bảo nền nằm dưới */
+    }
+
+    .content {
+      width: 100%;
+      height: 90vh;
+      position: relative;
+      background-image: url('{{ movie.thumbnailimg }}'); 
+      background-size: cover;            /* Giúp hình ảnh phủ kín toàn bộ màn hình */
+      background-repeat: no-repeat;       /* Không lặp lại hình ảnh */
+      background-position: top-left;        /* Canh giữa hình ảnh background */
+    }
+
+    .movie-container {
+      top: 10%;
+      position: relative; /* Để đảm bảo nó nằm trên nền */
+      z-index: 2; /* Quan trọng: Đặt cao hơn filterBackground */
+      justify-content: center;
+      color: white;
+      width: 40%;
+      padding: 20px;
+    }
+
+    #name {
+      font-size: 40px;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .info {
+      font-weight: bold;
+    }
+
+    .btn {
+      width: 120px;
+      height: 50px;
+      font-size: 16px;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      background: white;
+      border: 2px solid;
+      outline: none;
+      transition: 0.1s ease-in-out;
+    }
+
+    .btn svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      fill: none;
+      stroke: #21429d;
+      stroke-dasharray: 150 480;
+      stroke-dashoffset: 150;
+      transition: 0.1s ease-in-out;
+    }
+
+    .btn:hover {
+      transition: 0.1s ease-in-out;
+      background: black;
+      color: aliceblue;
+      border: 2px solid #ffffff;
+    }
+
+    .btn:hover span {
+      transition: 0.1s ease-in-out;
+      color: #fff;
+    }
+
+    .btn:hover svg {
+      stroke-dashoffset: -480;
+    }
+
+    .btn span {
+      color: black;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+  </style>
+  <div class="content">
+    <div class="movie-container">
+        <h1 id="name">{{ movie.name }}</h1>
+        <p class="info">{{ movie.type }}  •  {{ movie.duration }}  •  {{ movie.publishyear }}</p>
+        <div>
+          <p> {{ movie.content }} </p>
+        </div>
+        <div>
+          <button class="btn" onclick="watchMovie()">
+            XEM PHIM
+          </button>
+          <select class="btn" id="selectEp">
+            {% for ep in movieEpList %}
+            <option value="{{  ep.episode }}"> {{ ep.episode }} </option>
+            {% endfor %}
+          </select>
+        </div>
+        <p class="info">{{ movie.genre }}</p>
+
+        <script>
+          function watchMovie() {
+            const selectedEp = document.getElementById('selectEp').value; 
+            if (selectedEp) {
+              const currentPath = window.location.pathname;
+              
+              const newUrl = `${currentPath}${encodeURIComponent(selectedEp)}`;
+
+              // Chuyển hướng sang URL mới
+              window.location.href = newUrl;
+            }
+          }
+        </script>    
+    </div>
+    <div class="filterBackground"></div>
+  </div>
+  
+{% endblock %}
+
