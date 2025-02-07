@@ -30,6 +30,8 @@ A streaming website built with Django that allows users to watch movies and TV s
 
 The recommendation system is built using **cosine similarity** to suggest movies based on user preferences. It works by comparing movie feature vectors and finding the most similar ones.
 
+Implementation process is similar to https://github.com/tohuy2710/Movie-Recommendation-System
+
 ### 🔹 **Libraries Used for Recommendation System**
 - 📊 **pandas** → Data handling & manipulation  
 - 🔢 **sklearn (scikit-learn)** → Computing **cosine similarity** for movie recommendations
